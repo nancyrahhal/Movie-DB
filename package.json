@@ -4,7 +4,7 @@
   "description": "movie DB project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1", // this should be there
+    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js"
 },
   "repository": {
