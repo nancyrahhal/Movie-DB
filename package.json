@@ -1,0 +1,22 @@
+{
+  "name": "movie-db",
+  "version": "1.0.0",
+  "description": "movie DB project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1", // this should be there
+    "dev": "nodemon index.js"
+},
+  "repository": {
+    "type": "git",
+    "url": "Movie-DB"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
