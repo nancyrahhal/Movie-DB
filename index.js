@@ -74,6 +74,20 @@ app.get('/movies/get/:condition?',(req,res)=>{
     res.status(200).json({status:200, data:movies});
 });
 
+//step 7
+app.get('/movies/get/id/:id?',(req,res)=>{
+    let bookID=req.params.id;
+    if(bookID>0 && bookID<=movies.length){
+        res.status(200).json({status:200, data:movies[bookID-1]});
+    }
+    else if(bookID>movies.length || bookID<=0){
+    res.status(404).json({status:404, error: true, message:`The movie ${bookID} doesn't exit`});
+    }else{
+    res.status(404).json({status:404, error: true, message:`invalid id`});
+    }
+});
+
+
 
 app.listen(port,()=>console.log('Express app is running on port 3000'))
 
