@@ -2,6 +2,14 @@ let express = require('express');
 let app = express();//creating an instance of Express
 let port = 3000;//specifying the port
 
+//step5
+const movies = [
+    { title: 'Jaws', year: 1975, rating: 8 },
+    { title: 'Avatar', year: 2009, rating: 7.8 },
+    { title: 'Brazil', year: 1985, rating: 8 },
+    { title: 'الإرهاب والكباب‎', year: 1992, rating: 6.2 }
+]
+
 //step 2
 app.get('/',(req, res)=> res.send('ok'));//implementin the response behaviour
 
@@ -30,6 +38,22 @@ app.get('/search',(req,res)=>{
         res.status(500).json({status:500, error: true ,message:`you have to provide a search`});
     }
    
+});
+
+//step 5
+
+
+app.get('/movies/add',(req,res)=>{
+    res.status(200).json({status:200, message:'create'});
+});
+app.get('/movies/get',(req,res)=>{
+    res.status(200).json({status:200, data:movies});
+});
+app.get('/movies/edit',(req,res)=>{
+    res.status(200).json({status:200, message:'update'});
+});
+app.get('/movies/delete',(req,res)=>{
+    res.status(200).json({status:200, message:'delete'});
 });
 
 app.listen(port,()=>console.log('Express app is running on port 3000'))
