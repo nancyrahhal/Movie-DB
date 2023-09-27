@@ -46,15 +46,34 @@ app.get('/search',(req,res)=>{
 app.get('/movies/add',(req,res)=>{
     res.status(200).json({status:200, message:'create'});
 });
-app.get('/movies/get',(req,res)=>{
-    res.status(200).json({status:200, data:movies});
-});
+// app.get('/movies/get',(req,res)=>{
+//     res.status(200).json({status:200, data:movies});
+// });
 app.get('/movies/edit',(req,res)=>{
     res.status(200).json({status:200, message:'update'});
 });
 app.get('/movies/delete',(req,res)=>{
     res.status(200).json({status:200, message:'delete'});
 });
+
+//step 6
+app.get('/movies/get/:condition?',(req,res)=>{
+    let getBy=req.params.condition;
+    if(getBy=='by-date'){
+        let sortedByDate=movies.sort((a,b)=>a.year-b.year);
+        res.status(200).json({status:200, data:sortedByDate});
+    }
+    else if(getBy=='by-rating'){
+        let sortedByRating=movies.sort((a,b)=>a.rating-b.rating);
+        res.status(200).json({status:200, data:sortedByRating});
+    }
+    else if(getBy=='by-title'){
+        let sortedByTitle=movies.sort((a,b)=>a.title.localeCompare(b.title));
+        res.status(200).json({status:200, data:sortedByTitle});
+    }
+    res.status(200).json({status:200, data:movies});
+});
+
 
 app.listen(port,()=>console.log('Express app is running on port 3000'))
 
