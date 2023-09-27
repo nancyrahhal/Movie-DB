@@ -11,34 +11,34 @@ const movies = [
 ]
 
 //step 2
-app.get('/',(req, res)=> res.send('ok'));//implementin the response behaviour
+// app.get('/',(req, res)=> res.send('ok'));//implementin the response behaviour
 
 //step 3
-app.get('/test',(req,res)=>{
-    res.status(200).json({status:200, message:'ok'});
-});
-app.get('/time',(req,res)=>{
-    let currentTime= new Date();
-    let hour=currentTime.getHours();
-    let minute=currentTime.getMinutes()
-    res.status(200).json({status:200, message: `${hour}:${minute<10?'0':''}${minute}`});
-});
+// app.get('/test',(req,res)=>{
+//     res.status(200).json({status:200, message:'ok'});
+// });
+// app.get('/time',(req,res)=>{
+//     let currentTime= new Date();
+//     let hour=currentTime.getHours();
+//     let minute=currentTime.getMinutes()
+//     res.status(200).json({status:200, message: `${hour}:${minute<10?'0':''}${minute}`});
+// });
 //step 4
-app.get('/hello/:id?',(req,res)=>{//with adding ?, it tells that id is optional
-    let userID=req.params.id || 'empty id';//if id is defined, take it, if not set the default to 'empty id'
-    res.status(200).json({status:200, message:`Hello, ${userID}`});
-});
+// app.get('/hello/:id?',(req,res)=>{//with adding ?, it tells that id is optional
+//     let userID=req.params.id || 'empty id';//if id is defined, take it, if not set the default to 'empty id'
+//     res.status(200).json({status:200, message:`Hello, ${userID}`});
+// });
 
-app.get('/search',(req,res)=>{
-    let userSearch=req.query.s;//extract the s value from seach
-    if(typeof userSearch!= 'undefined' && userSearch!=""){//if s value is defined and not empty
-        res.status(200).json({status:200, message:`ok`, data: userSearch});
-    }
-    else{
-        res.status(500).json({status:500, error: true ,message:`you have to provide a search`});
-    }
+// app.get('/search',(req,res)=>{
+//     let userSearch=req.query.s;//extract the s value from seach
+//     if(typeof userSearch!= 'undefined' && userSearch!=""){//if s value is defined and not empty
+//         res.status(200).json({status:200, message:`ok`, data: userSearch});
+//     }
+//     else{
+//         res.status(500).json({status:500, error: true ,message:`you have to provide a search`});
+//     }
    
-});
+// });
 
 //step 5
 
@@ -57,7 +57,7 @@ app.get('/search',(req,res)=>{
 // });
 
 //step 6
-app.get('/movies/get/:condition?',(req,res)=>{
+app.get('/movies/:condition?',(req,res)=>{
     let getBy=req.params.condition;
     if(getBy=='by-date'){
         let sortedByDate=movies.sort((a,b)=>a.year-b.year);
@@ -71,11 +71,13 @@ app.get('/movies/get/:condition?',(req,res)=>{
         let sortedByTitle=movies.sort((a,b)=>a.title.localeCompare(b.title));
         res.status(200).json({status:200, data:sortedByTitle});
     }
+    else{
     res.status(200).json({status:200, data:movies});
+    }
 });
 
 //step 7
-app.get('/movies/get/id/:id?',(req,res)=>{
+app.get('/movies/id/:id?',(req,res)=>{
     let bookID=req.params.id;
     if(bookID>0 && bookID<=movies.length){
         res.status(200).json({status:200, data:movies[bookID-1]});
@@ -88,7 +90,7 @@ app.get('/movies/get/id/:id?',(req,res)=>{
 });
 
 //step 8
-app.get('/movies/add',(req,res)=>{
+app.post('/movies',(req,res)=>{
     let addTitle= req.query.title;
     let addYear= parseInt(req.query.year);
     let addRating=req.query.rating;
@@ -113,7 +115,7 @@ app.get('/movies/add',(req,res)=>{
 });
 
 //step 9
-app.get('/movies/delete/:id?',(req,res)=>{
+app.delete('/movies/:id?',(req,res)=>{
     let bookID=req.params.id;
     if(bookID){
 
@@ -134,7 +136,7 @@ app.get('/movies/delete/:id?',(req,res)=>{
 
 //step 10
 
-app.get('/movies/edit/:id?',(req,res)=>{
+app.put('/movies/:id?',(req,res)=>{
     let bookID=req.params.id;
     let newTitle=req.query.title;
     let newRating=req.query.rating;
