@@ -49,9 +49,9 @@ app.get('/search',(req,res)=>{
 // app.get('/movies/get',(req,res)=>{
 //     res.status(200).json({status:200, data:movies});
 // });
-app.get('/movies/edit',(req,res)=>{
-    res.status(200).json({status:200, message:'update'});
-});
+// app.get('/movies/edit',(req,res)=>{
+//     res.status(200).json({status:200, message:'update'});
+// });
 // app.get('/movies/delete',(req,res)=>{
 //     res.status(200).json({status:200, message:'delete'});
 // });
@@ -101,7 +101,6 @@ app.get('/movies/add',(req,res)=>{
         else{
             movies.push({ title: addTitle, year: addYear, rating: 4 });
             res.status(200).json({ status: 200, data: movies });
-
         }
     }
     else {
@@ -131,6 +130,50 @@ app.get('/movies/delete/:id?',(req,res)=>{
     else{
     res.status(200).json({status:200, message:'delete'});
     }
+});
+
+//step 10
+
+app.get('/movies/edit/:id?',(req,res)=>{
+    let bookID=req.params.id;
+    let newTitle=req.query.title;
+    let newRating=req.query.rating;
+    let newYear=parseInt(req.query.year);
+
+    if(bookID){
+        if(bookID>0 && bookID<=movies.length){
+            if(newTitle||newYear||newRating){
+                let movieToUpdate = movies[bookID - 1];
+                if (newTitle) {
+                    movieToUpdate.title = newTitle;
+                }
+                if (!isNaN(newYear)) {
+                    movieToUpdate.year = newYear;
+                }
+                if (newRating) {
+                    movieToUpdate.rating = newRating;
+                }
+                res.status(200).json({status: 200, data: movies});
+            }
+            else{
+                res.status(404).json({status:404, error: true, message:`nothing updated`});
+            }
+        }
+        else if(bookID>movies.length || bookID<=0){
+            res.status(404).json({status:404, error: true, message:`The movie ${bookID} doesn't exit`});
+        }
+        else{
+            res.status(404).json({status:404, error: true, message:`invalid id`});
+        }
+
+    }
+    else{
+        res.status(200).json({status:200, message:'update'});
+
+    }
+
+
+    
 });
 
 app.listen(port,()=>console.log('Express app is running on port 3000'))
